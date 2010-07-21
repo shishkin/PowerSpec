@@ -1,5 +1,4 @@
-remove-module PowerSpec -ea SilentlyContinue
-import-module .\PowerSpec.psm1
+import-module .\PowerSpec.psm1 -force
 
 resolve-path ".\specs\*.ps1" | test-spec | out-null
 
