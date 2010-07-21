@@ -1,0 +1,1 @@
+@powershell -NoProfile -ExecutionPolicy RemoteSigned -File "%~dp0\PowerSpec.ps1"
