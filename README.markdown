@@ -1,4 +1,4 @@
-PowerSpec 0.0.1
+PowerSpec 0.0.2
 ====
 
 PowerSpec is a PowerShell module aimed to aid Test-Driven Development with PowerShell.
@@ -14,8 +14,6 @@ Example
  - Run .\..\Any\Path\To\PowerSpec\powerspec.cmd from your project folder
  - Enjoy your colorful test results:
 
-		some_filename.ps1 FAILED
-		{ 10 * 5 } is not equal to 60.
-		C:\serega\Code\PowerSpec\specs\some_filename.ps1 Ln 1 Col 2
-		
-		Test results: 1 failed, 1 Total.
+		some_filename.ps1
+			10 * 5  should be equal to 60 FAILED
+		Test results: 1 failed, 1 total.

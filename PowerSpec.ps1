@@ -1,7 +1,7 @@
 $base_dir = split-path $MyInvocation.InvocationName
 
-import-module "$base_dir\PowerSpec.psm1" -force
+resolve-path "$base_dir\PowerSpec*.psm1" | import-module -force
 
 resolve-path ".\specs\*.ps1" | test-spec | out-null
 
-remove-module PowerSpec
+get-module "PowerSpec*" | remove-module
