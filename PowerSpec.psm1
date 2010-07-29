@@ -69,12 +69,16 @@ function Test-Script {
         $name = (split-path $_ -leaf).Trim()
         write-host $name
 
+        split-path $_ | push-location
         try {
             &$_ | write-assertion | write-output
         }
         catch {
             write-success "`t$_" -failure
             write-host
+        }
+        finally {
+            pop-location
         }
     }
 }
