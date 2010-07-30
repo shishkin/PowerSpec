@@ -47,7 +47,10 @@ function write-assertion ($name, $result) {
 
 function eval {
     process {
-        if ($_ -is [scriptblock]) { return ,(&$_) }
+        if ($_ -is [scriptblock]) {
+            try { return ,(&$_) }
+            catch { return $_ }
+        }
         else { return ,$_ }
     }
 }
@@ -63,6 +66,10 @@ function humanize {
 }
 
 function format-assertion ($actual, $func, $tail) {
+    $actual_value = $actual | eval
+    if ("$actual" -ne "$actual_value") {
+        $actual = "$actual ($actual_value)"
+    }
     $items = $actual, $func, $tail | humanize
     return $items -join ' '
 }
