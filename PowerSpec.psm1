@@ -93,3 +93,10 @@ function Test-Spec {
 }
 
 export-moduleMember -function Test-Spec
+
+$plugins = get-module "PowerSpec-*" |
+    % { $_.ExportedCommands.GetEnumerator() } |
+    % { $_.Value }
+$plugins |
+    ? { $_.CommandType -eq 'Function' } |
+    % { export-moduleMember -function $_.Name }
