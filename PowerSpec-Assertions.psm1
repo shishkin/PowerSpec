@@ -77,7 +77,7 @@ function format-assertion ($actual, $func, $tail) {
 function call ($func, $func_args) {
     if ($func -ne 'throw'-and
         $func -ne 'not') {
-        $func_args = $func_args | eval
+        $func_args = @($func_args | eval)
     }
     return &$func @func_args
 }
@@ -136,7 +136,7 @@ function throw ([scriptblock]$script) {
 }
 
 function be_null ($actual) {
-    return $actual -eq $null
+    return $null -eq $actual
 }
 
 export-moduleMember -function `
