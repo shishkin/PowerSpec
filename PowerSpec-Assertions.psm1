@@ -135,6 +135,10 @@ function throw ([scriptblock]$script) {
     return $thrown
 }
 
+function be_null ($actual) {
+    return $actual -eq $null
+}
+
 export-moduleMember -function `
     each,
     should,
@@ -142,4 +146,5 @@ export-moduleMember -function `
     throw,
     be_equal,
     be_true,
-    be_false
+    be_false,
+    be_null
