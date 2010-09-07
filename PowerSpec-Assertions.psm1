@@ -113,6 +113,7 @@ function not {
 }
 
 function be_equal ($actual, $expected) {
+    if ($actual -is [enum]) { return $actual -eq $expected }
     return [System.Object]::Equals($actual, $expected)
 }
 
