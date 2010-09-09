@@ -126,7 +126,7 @@ function be_true ($actual) {
 }
 
 function be_false ($actual) {
-    return -not (be_true $actual)
+    return be_equal $actual $false
 }
 
 function throw ([scriptblock]$script) {
