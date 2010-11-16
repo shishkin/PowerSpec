@@ -66,15 +66,26 @@ function Write-Assertion {
 
 function Test-Script {
     process {
+        if ($null -eq $_) { return }
+        
+        if ($_ -is [string]) {
+            resolve-path $_ | test-script
+            return
+        }
+
         $name = (split-path $_ -leaf).Trim()
         write-host $name
 
         split-path $_ | push-location
+        
         try {
-            &$_ | write-assertion | write-output
+            resolve-path $name |
+                % { & $_ } |
+                write-assertion |
+                write-output
         }
         catch {
-            write-success "`t$_" -failure
+            write-success "`t$name" -failure
             write-host
         }
         finally {
@@ -84,11 +95,21 @@ function Test-Script {
 }
 
 function Test-Spec {
+    begin {
+        $results = @()
+    }
+    process {
+        if ($null -eq $_) {
+            $_ = $args[0]
+        }
+        if ($null -eq $_) {
+            $_ = ".\specs\*.ps1"
+        }
+
+        $_ | test-script | % { $results += $_ }
+    }
     end {
-        $input |
-            test-script |
-            get-summary |
-            format-summary
+        $results | get-summary | format-summary
     }
 }
 
