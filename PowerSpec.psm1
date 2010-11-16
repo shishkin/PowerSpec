@@ -64,6 +64,25 @@ function Write-Assertion {
     }
 }
 
+function Execute-Script {
+    process {
+        $pop = $false
+        if ($_ -is [io.path] -and (test-path $_)) {
+            $file = split-path $_ -leaf
+            split-path $_ | push-location
+            $_ = $file
+            $pop = $true
+        }
+        
+        try { & $_ }
+        finally {
+            if ($pop) {
+                pop-location
+            }
+        }
+    }
+}
+
 function Test-Script {
     process {
         if ($null -eq $_) { return }
@@ -73,23 +92,16 @@ function Test-Script {
             return
         }
 
-        $name = (split-path $_ -leaf).Trim()
-        write-host $name
+        write-host $_
 
-        split-path $_ | push-location
-        
         try {
-            resolve-path $name |
-                % { & $_ } |
+            $_ | execute-script |
                 write-assertion |
                 write-output
         }
         catch {
             write-success "`t$name" -failure
             write-host
-        }
-        finally {
-            pop-location
         }
     }
 }
