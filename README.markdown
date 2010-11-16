@@ -1,4 +1,4 @@
-PowerSpec 0.0.3
+PowerSpec 0.0.4
 ====
 
 PowerSpec is a PowerShell module aimed to aid Test-Driven Development with PowerShell.
@@ -23,3 +23,11 @@ Example
 			shit happens should throw PASSED
 			1 + 2 should not throw PASSED
 		Test results: 1 failed, 2 passed, 3 total.
+
+Usage From PowerShell
+----
+
+It is also possible to import the PowerSpec module into PowerShell session and write specifications inline:
+
+		> import-module .\PowerSpec.psm1 -force
+		> test-spec { { 1 + 2 } | should not throw }
