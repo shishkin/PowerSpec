@@ -140,6 +140,10 @@ function be_null ($actual) {
     return $null -eq $actual
 }
 
+function work () {
+    return $true
+}
+
 function be_greater ($actual, $expected) {
     return $actual -gt $expected
 }
