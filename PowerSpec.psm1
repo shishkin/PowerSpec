@@ -74,7 +74,14 @@ function Execute-Script {
             $pop = $true
         }
         
-        try { & $_ }
+        try { & $_ }        
+        catch {   
+            write-output @{
+                type = 'assertion';
+                assertion = $_.ToString();
+                result = $false
+            }
+        }
         finally {
             if ($pop) {
                 pop-location
@@ -99,8 +106,9 @@ function Test-Script {
                 write-assertion |
                 write-output
         }
-        catch {
-            write-success "`t$name" -failure
+        catch {            
+            write-assertion "`t$name`n$_" -failure
+            #write-success "`t$name`n$_" -failure
             write-host
         }
     }
